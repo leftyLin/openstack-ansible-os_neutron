@@ -36,9 +36,10 @@
     - "inventory_hostname == ((groups[neutron_services['neutron-server']['group']] | intersect(ansible_play_hosts)) | list)[0]"
   changed_when: false
   register: _offline_migrations_check
-  failed_when:
-    - "_offline_migrations_check.rc == 1"
-    - "'Need to apply migrations' not in _offline_migrations_check.stdout"
+  # failed_when:
+  #  - "_offline_migrations_check.rc == 1"
+  #  - "'Need to apply migrations' not in _offline_migrations_check.stdout"
+  ignore_errors: True
 
 - name: Set the fact for the required offline migrations
   ini_file:
